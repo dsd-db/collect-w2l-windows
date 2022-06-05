@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 import json
 import socket
@@ -133,7 +132,7 @@ s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 s.bind(ADDR)
 s.listen(1)
 
-def con():
+def con()->None:
     while True:
         ss,caddr=s.accept()
         if DEBUG:
@@ -148,24 +147,5 @@ def con():
             print('SClose:',caddr)
 
 
-def bgt(f:callable,args:tuple=tuple())->threading.Thread:
-    if isinstance(f,(list,tuple)):
-        if len(f)==1:
-            args=tuple()
-        elif len(f)==2:
-            args=f[1]
-        else:
-            args=tuple(f[1:])
-        f=f[0]
-
-    if not isinstance(args,tuple):
-        args=(args,)
-    if args:
-        _t=threading.Thread(target=f,args=args,daemon=True)
-    else:
-        _t=threading.Thread(target=f,daemon=True)
-    _t.start()
-    return _t
-
-bgt(con)
+threading.Thread(target=con,daemon=True).start()
 asyncio.run(main())
