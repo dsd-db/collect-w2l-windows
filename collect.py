@@ -105,7 +105,7 @@ async def main():
     await asyncio.gather(*tasks)
 
 
-CSV=os.path.join(os.path.abspath(os.path.dirname(__file__)),'collect.csv')
+CSV=os.path.join(os.path.dirname(__file__),'collect.csv')
 data=list()
 for i in open(CSV,'r').read().split('\n'):
     i=i.split(',')
