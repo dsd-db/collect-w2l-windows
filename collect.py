@@ -134,7 +134,7 @@ def getmsg()->bytes:
     ans=''
     for i in devices:
         ans+=','.join([str(j) for j in cache[i]])
-        ans+='\n' if i is devices[-1] else ','
+        ans+='' if i is devices[-1] else ','
         cache_flag[i]=False
     return ans.encode('utf8')
 
