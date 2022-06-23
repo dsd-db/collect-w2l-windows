@@ -9,10 +9,10 @@ _BLEAK='_BLEAK'
 _READ='_READ'
 # _SOCKET='_SOCKET'
 
-SWITCH=_BLEAK
+MODE=_BLEAK
 DEBUG=True
 
-if SWITCH==_BLEAK:
+if MODE==_BLEAK:
     from bleak import BleakClient
 
 def pt(s:str,flush:bool=False)->None:
@@ -123,12 +123,12 @@ i=-1
 
 
 def getmsg()->bytes:
-    global SWITCH,i
+    global MODE,i
     while not all(cache_flag.values()):
-        if SWITCH!=_BLEAK:
+        if MODE!=_BLEAK:
             break
         time.sleep(0.01)
-    if SWITCH==_READ:
+    if MODE==_READ:
         i=(i+1)%n
         return data[i]
     ans=''
@@ -158,12 +158,12 @@ def mian()->None:
 
 threading.Thread(target=mian,daemon=True).start()
 threading.Thread(target=mian,daemon=True).start()
-if SWITCH==_BLEAK:
+if MODE==_BLEAK:
     try:
         asyncio.run(main())
     except:
         pt('BFailed: main')
-        SWITCH=_READ
+        MODE=_READ
 else:
     while True:
         time.sleep(1000)
